@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pasar Kopi Semarang 2026</title>
+<!-- Bootstrap 5 (dipakai untuk form pendaftaran). Butuh internet saat dibuka. -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+/* ===== CSS 1: variabel warna & tema terang/gelap ===== */
+:root{
+  --bg:#f3f5ef;--surface:#ffffff;--ink:#1a2a26;--muted:#51625d;--forest:#17463b;--on-forest:#f3f5ef;
+  --crema:#e8b04b;--berry:#8c2f4b;--line:#cfd8cf;
+  --font:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#101a17;--surface:#18241f;--ink:#e9efe8;--muted:#a3b3ac;--forest:#0b2a23;--on-forest:#f3f5ef;--crema:#e8b04b;--berry:#e0809c;--line:#2c3d37;color-scheme:dark}
+}
+:root[data-theme="dark"]{--bg:#101a17;--surface:#18241f;--ink:#e9efe8;--muted:#a3b3ac;--forest:#0b2a23;--on-forest:#f3f5ef;--crema:#e8b04b;--berry:#e0809c;--line:#2c3d37;color-scheme:dark}
+html{scroll-padding-top:calc(4rem + env(safe-area-inset-top,0px));scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.6;font-size:1.0625rem}
+img,svg{max-width:100%}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--crema);outline-offset:3px}
+/* RESPONSIF: lebar konten fleksibel, maksimal 1080px, menyesuaikan layar */
+.wrap{width:min(1080px,100% - 2.5rem);margin-inline:auto}
+.skip{position:absolute;left:-999px}.skip:focus{left:1rem;top:1rem;background:var(--crema);color:#000;padding:.5rem 1rem;z-index:20}
+
+header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--forest);color:var(--on-forest)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;min-height:4rem;gap:1rem}
+.brand{font-weight:800;font-size:1.15rem;text-decoration:none;letter-spacing:-.01em}
+nav ul{display:flex;gap:1.25rem;list-style:none;margin:0;padding:0}
+nav a{text-decoration:none;font-weight:500;padding:.4rem 0;border-bottom:2px solid transparent}
+nav a:hover{border-color:var(--crema)}
+.btn{display:inline-block;background:var(--crema);color:#1a1405;font:inherit;font-weight:700;border:0;border-radius:999px;padding:.8rem 1.6rem;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.07)}
+.btn.sm{padding:.45rem 1.1rem;font-size:.95rem}
+
+.hero{background-image:linear-gradient(color-mix(in srgb,var(--forest) 82%,transparent),color-mix(in srgb,var(--forest) 82%,transparent)),url("image/festivalkopi.jpg");background-position:center;background-size:cover;color:var(--on-forest);padding:clamp(3rem,9vw,6.5rem) 0 clamp(3rem,7vw,5rem)}
+/* RESPONSIF: clamp() membuat ukuran judul ikut mengecil/membesar sesuai lebar layar */
+.hero h1{font-size:clamp(2.6rem,8.5vw,6rem);line-height:.95;letter-spacing:-.04em;margin:0 0 1.2rem;font-weight:800;max-width:11ch}
+.hero p.lead{font-size:1.2rem;max-width:34rem;margin:0 0 1.6rem;color:#d4dfd8}
+.countdown{display:flex;flex-wrap:wrap;gap:.75rem;margin:2.2rem 0 0;padding:0;list-style:none}
+.countdown li{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);border-radius:14px;padding:.7rem 1rem;min-width:5.2rem;text-align:center}
+.countdown b{display:block;font-size:2.1rem;line-height:1.1;font-variant-numeric:tabular-nums;color:var(--crema)}
+.countdown span{font-size:.85rem;color:#d4dfd8}
+
+section{padding:clamp(2.8rem,7vw,5rem) 0}
+h2{font-size:clamp(1.8rem,4.5vw,2.8rem);line-height:1.1;letter-spacing:-.03em;margin:0 0 1rem;max-width:20ch}
+.intro{color:var(--muted);max-width:40rem;margin:0 0 2rem}
+/* RESPONSIF: grid auto-fit, kolom otomatis turun ke bawah di layar sempit */
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem}
+.grid3 article{border-top:4px solid var(--crema);padding-top:1rem}
+.grid3 h3{margin:0 0 .4rem;font-size:1.25rem}
+.grid3 p{margin:0;color:var(--muted)}
+
+.tabs{display:flex;gap:.5rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.tabs button{font:inherit;font-weight:600;background:transparent;color:var(--ink);border:2px solid var(--line);border-radius:999px;padding:.55rem 1.2rem;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--forest);color:var(--on-forest);border-color:var(--forest)}
+.agenda{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.agenda li{display:grid;grid-template-columns:6.5rem 1fr;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--line)}
+.agenda time{font-weight:700;font-variant-numeric:tabular-nums}
+.agenda strong{display:block}.agenda small{color:var(--muted);font-size:.95rem}
+
+.ticket-box{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:clamp(1.2rem,4vw,2.4rem);display:grid;grid-template-columns:1.2fr 1fr;gap:2rem}
+fieldset{border:0;padding:0;margin:0 0 1.2rem}
+legend{font-weight:700;margin-bottom:.5rem}
+.opt{display:flex;justify-content:space-between;gap:1rem;border:2px solid var(--line);border-radius:12px;padding:.8rem 1rem;margin-bottom:.6rem;cursor:pointer}
+.opt:has(input:checked){border-color:var(--forest);background:color-mix(in srgb,var(--crema) 18%,transparent)}
+.opt input{accent-color:var(--forest);margin-right:.6rem}
+label.f{display:block;font-weight:600;margin-bottom:.35rem}
+input[type=text],input[type=email],input[type=number]{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:10px;padding:.65rem .8rem}
+.field{margin-bottom:1rem}
+.err{color:var(--berry);font-size:.92rem;min-height:1.2em;margin:.25rem 0 0}
+input[aria-invalid="true"]{border-color:var(--berry)}
+.summary{background:var(--forest);color:var(--on-forest);border-radius:14px;padding:1.4rem;align-self:start}
+.summary dl{margin:0}.summary div.line{display:flex;justify-content:space-between;padding:.35rem 0;border-bottom:1px solid rgba(255,255,255,.18)}
+.summary dt{color:#d4dfd8}.summary dd{margin:0;font-weight:600}
+.total{font-size:2rem;font-weight:800;color:var(--crema);margin:.8rem 0 1rem}
+.ok{background:var(--crema);color:#1a1405;border-radius:10px;padding:.8rem 1rem;margin-top:1rem;font-weight:600}
+
+footer{background:var(--forest);color:var(--on-forest);padding:2rem 0}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
+footer p{margin:0;color:#d4dfd8}
+/* ===== CSS 2: perbaikan agar Bootstrap tidak mengubah tampilan awal ===== */
+a:hover{color:inherit}
+legend{float:none;width:auto;font-size:1rem;padding:0}
+h2,h3{font-weight:700}
+.btn:hover,.btn:focus-visible{background:var(--crema);color:#1a1405}
+
+/* ===== CSS 3: efek HOVER (saat kursor diarahkan) ===== */
+nav a,.tabs button,.opt,.grid3 article,.agenda li,.btn,.reg .form-control,.reg .form-select{transition:background-color .2s,border-color .2s,transform .2s,box-shadow .2s}
+.grid3 article:hover{transform:translateY(-6px);border-top-color:var(--berry)}
+.agenda li:hover{background:color-mix(in srgb,var(--crema) 16%,transparent)}
+.tabs button:hover,.opt:hover{border-color:var(--forest)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(0,0,0,.25)}
+.reg .form-control:hover,.reg .form-select:hover{border-color:var(--forest)}
+
+/* ===== CSS 4: tampilan form pendaftaran (Bootstrap) ===== */
+.reg{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:clamp(1.2rem,4vw,2.4rem)}
+.reg .form-label{font-weight:600}
+.reg .form-control,.reg .form-select{background-color:var(--bg);color:var(--ink);border:2px solid var(--line);border-radius:10px;padding:.65rem .8rem}
+.reg .form-check-input:checked{background-color:var(--forest);border-color:var(--forest)}
+.reg .form-check-label{cursor:pointer}
+footer .identitas{margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.22)}
+
+/* RESPONSIF: media query, aturan khusus layar lebar maksimal 760px (HP/tablet kecil) */
+@media (max-width:760px){
+  nav ul li:not(:last-child){display:none}
+  .ticket-box{grid-template-columns:1fr}
+  .agenda li{grid-template-columns:5rem 1fr}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Lewati ke konten</a>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#atas">Pasar Kopi Semarang</a>
+    <nav aria-label="Navigasi utama">
+      <ul>
+        <li><a href="#tentang">Tentang</a></li>
+        <li><a href="#jadwal">Jadwal</a></li>
+        <li><a href="#tiket">Tiket</a></li>
+        <li><a href="#daftar">Daftar</a></li>
+        <li><a class="btn sm" href="#tiket">Beli tiket</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="atas" aria-labelledby="judul">
+    <div class="wrap">
+      <h1 id="judul">Pasar Kopi Semarang 2026</h1>
+      <p class="lead">Dua hari mencicipi, menyeduh, dan mengobrol langsung dengan petani dan barista dari 40 kebun kopi Jawa Tengah. Sabtu–Minggu, 28–29 November 2026, Kota Lama Semarang.</p>
+      <a class="btn" href="#tiket">Pilih tiket</a>
+      <ul class="countdown" aria-label="Hitung mundur menuju acara" id="countdown">
+        <li><b id="cd-d">00</b><span>hari</span></li>
+        <li><b id="cd-h">00</b><span>jam</span></li>
+        <li><b id="cd-m">00</b><span>menit</span></li>
+        <li><b id="cd-s">00</b><span>detik</span></li>
+      </ul>
+      <p id="cd-note" role="status"></p>
+    </div>
+  </section>
+
+  <section id="tentang" aria-labelledby="h-tentang">
+    <div class="wrap">
+      <h2 id="h-tentang">Kopi dari kebun ke cangkir, tanpa perantara</h2>
+      <p class="intro">Festival ini mempertemukan petani, roaster, dan penikmat kopi di satu tempat. Setiap tiket sudah termasuk kupon cicip.</p>
+      <div class="grid3">
+        <article><h3>40 kebun kopi</h3><p>Dari Temanggung, Kendal, Wonosobo, dan lereng Ungaran. Cicip biji yang sama dari panen berbeda.</p></article>
+        <article><h3>Kelas seduh</h3><p>Belajar V60, tubruk, dan cold brew bersama barista juara daerah. Kelas dibatasi 20 orang.</p></article>
+        <article><h3>Bawa pulang biji segar</h3><p>Beli langsung dari petani dengan harga kebun. Roasting hari itu juga.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="jadwal" aria-labelledby="h-jadwal" style="background:var(--surface)">
+    <div class="wrap">
+      <h2 id="h-jadwal">Jadwal acara</h2>
+      <div class="tabs" role="tablist" aria-label="Pilih hari">
+        <button role="tab" id="tab-1" aria-selected="true" aria-controls="panel" data-day="1">Sabtu, 28 Nov</button>
+        <button role="tab" id="tab-2" aria-selected="false" aria-controls="panel" data-day="2" tabindex="-1">Minggu, 29 Nov</button>
+      </div>
+      <ul class="agenda" id="panel" role="tabpanel" aria-labelledby="tab-1"></ul>
+    </div>
+  </section>
+
+  <section id="tiket" aria-labelledby="h-tiket">
+    <div class="wrap">
+      <h2 id="h-tiket">Beli tiket</h2>
+      <p class="intro">Pilih jenis tiket dan jumlahnya. Total diperbarui otomatis. Punya kode promo? Coba <strong>KOPI10</strong> untuk diskon 10%.</p>
+      <form class="ticket-box" id="form" novalidate>
+        <div>
+          <fieldset>
+            <legend>Jenis tiket</legend>
+            <label class="opt"><span><input type="radio" name="jenis" value="75000" data-nama="Satu hari" checked>Satu hari</span><b>Rp75.000</b></label>
+            <label class="opt"><span><input type="radio" name="jenis" value="125000" data-nama="Dua hari">Dua hari</span><b>Rp125.000</b></label>
+            <label class="opt"><span><input type="radio" name="jenis" value="225000" data-nama="Dua hari + kelas seduh">Dua hari + kelas seduh</span><b>Rp225.000</b></label>
+          </fieldset>
+          <div class="field">
+            <label class="f" for="qty">Jumlah tiket (1–10)</label>
+            <input type="number" id="qty" min="1" max="10" value="1" inputmode="numeric" aria-describedby="e-qty">
+            <p class="err" id="e-qty"></p>
+          </div>
+          <div class="field">
+            <label class="f" for="promo">Kode promo (opsional)</label>
+            <input type="text" id="promo" autocomplete="off" aria-describedby="e-promo">
+            <p class="err" id="e-promo" role="status"></p>
+          </div>
+          <div class="field">
+            <label class="f" for="nama">Nama lengkap</label>
+            <input type="text" id="nama" autocomplete="name" aria-describedby="e-nama">
+            <p class="err" id="e-nama"></p>
+          </div>
+          <div class="field">
+            <label class="f" for="email">Email</label>
+            <input type="email" id="email" autocomplete="email" aria-describedby="e-email">
+            <p class="err" id="e-email"></p>
+          </div>
+        </div>
+        <aside class="summary" aria-label="Ringkasan pesanan" aria-live="polite">
+          <dl>
+            <div class="line"><dt>Tiket</dt><dd id="s-jenis"></dd></div>
+            <div class="line"><dt>Jumlah</dt><dd id="s-qty"></dd></div>
+            <div class="line"><dt>Subtotal</dt><dd id="s-sub"></dd></div>
+            <div class="line"><dt>Diskon</dt><dd id="s-disc"></dd></div>
+          </dl>
+          <p class="total" id="s-total"></p>
+          <button class="btn" type="submit">Pesan tiket</button>
+          <div class="ok" id="ok" hidden></div>
+        </aside>
+      </form>
+    </div>
+  </section>
+  <section id="daftar" aria-labelledby="h-daftar">
+    <div class="wrap">
+      <h2 id="h-daftar">Form pendaftaran pengunjung</h2>
+      <p class="intro">Isi data diri agar panitia bisa mengirim informasi acara. Semua kolom wajib diisi.</p>
+      <form class="reg" id="reg" novalidate>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label for="r-nama" class="form-label">Nama lengkap</label>
+            <input type="text" class="form-control" id="r-nama" name="nama" minlength="3" required>
+            <div class="invalid-feedback">Tulis nama lengkap, minimal 3 huruf.</div>
+          </div>
+          <div class="col-md-6">
+            <label for="r-kota" class="form-label">Kota</label>
+            <select class="form-select" id="r-kota" name="kota" required>
+              <option value="" selected disabled>Pilih kota</option>
+              <option>Semarang</option>
+              <option>Kudus</option>
+              <option>Demak</option>
+              <option>Pekalongan</option>
+              <option>Tegal</option>
+              <option>Surabaya</option>
+              <option>Jakarta</option>
+            </select>
+            <div class="invalid-feedback">Pilih kota Anda.</div>
+          </div>
+          <div class="col-md-6">
+            <label for="r-email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="r-email" name="email" required>
+            <div class="invalid-feedback">Tulis email yang valid, contoh: nama@email.com.</div>
+          </div>
+          <div class="col-md-6">
+            <label for="r-kopi" class="form-label">Jenis kopi favorit</label>
+            <select class="form-select" id="r-kopi" name="kopi" required>
+              <option value="" selected disabled>Pilih salah satu</option>
+              <option>Arabika</option>
+              <option>Robusta</option>
+              <option>Liberika</option>
+              <option>Belum tahu</option>
+            </select>
+            <div class="invalid-feedback">Pilih jenis kopi favorit.</div>
+          </div>
+          <div class="col-12">
+            <label for="r-alamat" class="form-label">Alamat lengkap</label>
+            <textarea class="form-control" id="r-alamat" name="alamat" rows="3" minlength="10" required></textarea>
+            <div class="invalid-feedback">Tulis alamat lengkap, minimal 10 karakter.</div>
+          </div>
+          <div class="col-12">
+            <p class="form-label mb-2">Hobi</p>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" name="hobi" id="h1" value="Membaca">
+              <label class="form-check-label" for="h1">Membaca</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" name="hobi" id="h2" value="Koding">
+              <label class="form-check-label" for="h2">Koding</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" name="hobi" id="h3" value="Berenang">
+              <label class="form-check-label" for="h3">Berenang</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" name="hobi" id="h4" value="Menggambar">
+              <label class="form-check-label" for="h4">Menggambar</label>
+            </div>
+            <div class="text-danger small mt-1" id="hobi-err" hidden>Pilih minimal satu hobi.</div>
+          </div>
+          <div class="col-12">
+            <p class="form-label mb-2">Kategori pengunjung</p>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="kategori" id="k1" value="Umum" required>
+              <label class="form-check-label" for="k1">Umum</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="kategori" id="k2" value="Mahasiswa">
+              <label class="form-check-label" for="k2">Mahasiswa</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="kategori" id="k3" value="Komunitas">
+              <label class="form-check-label" for="k3">Komunitas</label>
+              <div class="invalid-feedback">Pilih salah satu kategori.</div>
+            </div>
+          </div>
+          <div class="col-12">
+            <button class="btn" type="submit">Kirim pendaftaran</button>
+          </div>
+        </div>
+        <div class="ok" id="reg-ok" role="status" hidden></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Pasar Kopi Semarang 2026 · Kota Lama, Semarang</p>
+    <p>halo@pasarkopi.example</p>
+  </div>
+  <div class="wrap identitas">
+    <p>Nama: <strong>[Gempar Herlangga Irawan]</strong></p>
+    <p>NIM: <strong>[A12.2025.07360]</strong></p>
+  </div>
+</footer>
+
+<script>
+/* ===== JAVASCRIPT: semua fitur interaktif ada di sini ===== */
+(function(){
+  "use strict";
+  var rp=function(n){return "Rp"+n.toLocaleString("id-ID")};
+  var $=function(id){return document.getElementById(id)};
+
+  /* JS 1: Hitung mundur. Menghitung selisih waktu sekarang ke tanggal acara, diperbarui tiap 1 detik (setInterval) */
+  var target=new Date("2026-11-28T09:00:00+07:00").getTime();
+  function tick(){
+    var d=target-Date.now();
+    if(d<=0){["d","h","m","s"].forEach(function(k){$("cd-"+k).textContent="00"});$("cd-note").textContent="Acara sedang berlangsung atau sudah selesai.";return;}
+    var v={d:Math.floor(d/864e5),h:Math.floor(d%864e5/36e5),m:Math.floor(d%36e5/6e4),s:Math.floor(d%6e4/1e3)};
+    for(var k in v){$("cd-"+k).textContent=String(v[k]).padStart(2,"0")}
+  }
+  tick();setInterval(tick,1000);
+
+  /* JS 2: Tab jadwal. Klik tombol hari, daftar acara dibuat ulang lewat DOM (createElement) */
+  var jadwal={
+    1:[["09:00","Pembukaan & seduh bersama","Panggung utama"],["11:00","Cicip 10 kopi Temanggung","Lapak petani"],["13:30","Kelas V60 untuk pemula","Ruang kelas A"],["16:00","Diskusi: harga adil untuk petani","Panggung utama"]],
+    2:[["09:00","Senam pagi & kopi tubruk","Halaman utama"],["10:30","Kelas cold brew","Ruang kelas A"],["13:00","Kompetisi barista amatir","Panggung utama"],["16:30","Pengumuman juara & penutupan","Panggung utama"]]
+  };
+  var panel=$("panel"),tabs=document.querySelectorAll("[role=tab]");
+  function show(day){
+    panel.innerHTML="";
+    jadwal[day].forEach(function(r){
+      var li=document.createElement("li");
+      li.innerHTML="<time>"+r[0]+"</time><div><strong>"+r[1]+"</strong><small>"+r[2]+"</small></div>";
+      panel.appendChild(li);
+    });
+    tabs.forEach(function(t){
+      var on=t.dataset.day==day;
+      t.setAttribute("aria-selected",on);t.tabIndex=on?0:-1;
+      if(on)panel.setAttribute("aria-labelledby",t.id);
+    });
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener("click",function(){show(t.dataset.day)});
+    t.addEventListener("keydown",function(e){
+      if(e.key==="ArrowRight"||e.key==="ArrowLeft"){var n=tabs[(i+1)%2];n.focus();show(n.dataset.day)}
+    });
+  });
+  show(1);
+
+  /* JS 3: Kalkulator tiket. Total, diskon, dan ringkasan dihitung ulang tiap input berubah, plus validasi saat submit */
+  var qty=$("qty"),promo=$("promo");
+  function hitung(){
+    var r=document.querySelector("input[name=jenis]:checked");
+    var harga=+r.value,n=parseInt(qty.value,10);
+    var valid=n>=1&&n<=10;
+    if(!valid)n=0;
+    var sub=harga*n,pakaiPromo=promo.value.trim().toUpperCase()==="KOPI10";
+    var disc=pakaiPromo?Math.round(sub*.1):0;
+    $("s-jenis").textContent=r.dataset.nama;
+    $("s-qty").textContent=n;
+    $("s-sub").textContent=rp(sub);
+    $("s-disc").textContent=disc?"−"+rp(disc):"–";
+    $("s-total").textContent=rp(sub-disc);
+    $("e-promo").textContent=promo.value&&!pakaiPromo?"Kode tidak dikenali.":(pakaiPromo?"Kode berlaku: diskon 10%.":"");
+    return valid;
+  }
+  function setErr(input,errId,msg){
+    $(errId).textContent=msg;
+    input.setAttribute("aria-invalid",msg?"true":"false");
+    return !msg;
+  }
+  document.querySelectorAll("input[name=jenis]").forEach(function(i){i.addEventListener("change",hitung)});
+  qty.addEventListener("input",function(){
+    var n=parseInt(qty.value,10);
+    setErr(qty,"e-qty",n>=1&&n<=10?"":"Isi jumlah tiket antara 1 dan 10.");
+    hitung();
+  });
+  promo.addEventListener("input",hitung);
+
+  $("form").addEventListener("submit",function(e){
+    e.preventDefault();
+    var nama=$("nama"),email=$("email");
+    var a=setErr(qty,"e-qty",hitung()?"":"Isi jumlah tiket antara 1 dan 10.");
+    var b=setErr(nama,"e-nama",nama.value.trim().length>=3?"":"Tulis nama lengkap, minimal 3 huruf.");
+    var c=setErr(email,"e-email",/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)?"":"Tulis email yang valid, contoh: nama@email.com.");
+    var ok=$("ok");
+    if(a&&b&&c){
+      ok.hidden=false;
+      ok.textContent="Terima kasih, "+nama.value.trim()+". Konfirmasi dikirim ke "+email.value.trim()+".";
+    }else{
+      ok.hidden=true;
+      var first=document.querySelector("[aria-invalid=true]");if(first)first.focus();
+    }
+  });
+  hitung();
+
+  /* JS 4: Validasi form Bootstrap. checkValidity() mengecek atribut required/minlength, lalu kelas was-validated menampilkan pesan error */
+  var reg=$("reg");
+  function d_all(n){return Array.prototype.map.call(reg.querySelectorAll("input[name="+n+"]:checked"),function(i){return i.value})}
+  reg.querySelectorAll("input[name=hobi]").forEach(function(c){c.addEventListener("change",function(){$("hobi-err").hidden=d_all("hobi").length>0})});
+  reg.addEventListener("submit",function(e){
+    e.preventDefault();
+    reg.classList.add("was-validated");
+    var ok=$("reg-ok");
+    var hobi=d_all("hobi");
+    $("hobi-err").hidden=hobi.length>0;
+    if(!reg.checkValidity()||!hobi.length){ok.hidden=true;return;}
+    var d=new FormData(reg);
+    ok.hidden=false;
+    ok.textContent="Terima kasih, "+d.get("nama")+" dari "+d.get("kota")+". Kategori: "+d.get("kategori")+". Hobi: "+hobi.join(", ")+".";
+  });
+})();
+</script>
+</body>
+</html>
